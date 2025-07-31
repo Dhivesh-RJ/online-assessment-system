@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Take Test - {{ test.title }}</title>
+</head>
+<body>
+    <h1>{{ test.title }}</h1>
+    <form method="post" action="{% url 'submit_test' %}">
+        {% csrf_token %}
+        <input type="hidden" name="test_id" value="{{ test.id }}">
+        {% for question in questions %}
+            <div>
+                <p><strong>{{ forloop.counter }}. {{ question.text }}</strong></p>
+                <label><input type="radio" name="q{{ question.id }}" value="A"> {{ question.option_a }}</label><br>
+                <label><input type="radio" name="q{{ question.id }}" value="B"> {{ question.option_b }}</label><br>
+                <label><input type="radio" name="q{{ question.id }}" value="C"> {{ question.option_c }}</label><br>
+                <label><input type="radio" name="q{{ question.id }}" value="D"> {{ question.option_d }}</label><br>
+            </div>
+            <hr>
+        {% endfor %}
+        <label>Enter your name: <input type="text" name="student_name" required></label><br><br>
+        <button type="submit">Submit Test</button>
+    </form>
+</body>
+</html>
